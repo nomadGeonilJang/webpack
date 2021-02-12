@@ -48,6 +48,10 @@ module.exports = {
                viewport:'width=device-width, initial-scale=1.0'
            },
            //최적화 시키기 할 수 있습니다.
+           minify:{
+               collapseWhitespace:true,
+               useShortDoctype:true
+           }
 
         }),
         new CleanWebpackPlugin() //빌드마다 새로 dist 싹 생성한다.
