@@ -2,6 +2,9 @@ const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const MiniCssExtrackPlugin = require("mini-css-extract-plugin");
+const webpack = require('webpack')
+
+const IS_PRODUCTION = process.env.NODE_ENV === 'PRODUCTION'
 
 module.exports = {
     entry:"/src/index.js",
@@ -49,13 +52,16 @@ module.exports = {
                viewport:'width=device-width, initial-scale=1.0'
            },
            //최적화 시키기 할 수 있습니다.
-           minify:{
+           minify:IS_PRODUCTION ? {
                collapseWhitespace:true,
                useShortDoctype:true,
                removeScriptTypeAttributes:true
-           }
+           }:false
 
         }),
-        new CleanWebpackPlugin() //빌드마다 새로 dist 싹 생성한다.
+        new CleanWebpackPlugin(), //빌드마다 새로 dist 싹 생성한다.
+        new webpack.DefinePlugin({
+            IS_PRODUCTION
+        })
     ],
 }

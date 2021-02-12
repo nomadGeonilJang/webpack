@@ -7,7 +7,7 @@ const template = document.createElement("template");
 root.appendChild(template)
 root.innerHTML = `
     <header>
-        <h1>Hello world2222</h1>
+        <h1>Hello world ${IS_PRODUCTION ? "production" : "development"}</h1>
     </header>
     <main>
         <p>
