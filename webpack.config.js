@@ -2,7 +2,8 @@ const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const MiniCssExtrackPlugin = require("mini-css-extract-plugin");
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserWebpackPlugin = require('terser-webpack-plugin');
 module.exports = {
     entry:"/src/index.js",
     output:{
@@ -79,6 +80,10 @@ module.exports = {
                     chunks:'all'
                 }
             }
-        }
+        },
+        minimize:true,
+        minimizer:[new TerserWebpackPlugin({
+            parallel:true
+        })]
     }
 }
