@@ -1,7 +1,8 @@
 const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
-const MiniCssExtrackPlugin = require("mini-css-extract-plugin")
+const MiniCssExtrackPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 module.exports = {
     entry:"/src/index.js",
     output:{
@@ -38,6 +39,14 @@ module.exports = {
         ]
     },
     plugins:[
+        new OptimizeCssAssetsPlugin({ //css 압축 그대로 복사해서 사용
+            assetNameRegExp: /\.css$/g,
+            cssProcessor: require('cssnano'),
+            cssProcessorPluginOptions: {
+              preset: ['default', { discardComments: { removeAll: true } }],
+            },
+            canPrint: true
+        }),
         new MiniCssExtrackPlugin({
             filename:`[contenthash].css`
         }),
@@ -50,7 +59,8 @@ module.exports = {
            //최적화 시키기 할 수 있습니다.
            minify:{
                collapseWhitespace:true,
-               useShortDoctype:true
+               useShortDoctype:true,
+               removeScriptTypeAttributes:true
            }
 
         }),
